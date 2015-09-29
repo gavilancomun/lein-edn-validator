@@ -83,12 +83,16 @@
 
 ;; all together
 
-(defn validate-edn
-  [edn]
+(defn edn-errors [edn]
   (->> edn
        edn->nested
        enrich-with-errors
-       isolate-errors
+       isolate-errors))
+
+(defn validate-edn
+  [edn]
+  (->> edn
+       edn-errors
        pprint-errors))
 
 (defn ^:no-project-needed edn-validator
